@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Compatibility Plugin Name: Polylang Pro
+ * Compatibility Plugin URI: https://polylang.pro/
+ *
+ * Compatibility Description: Ensures post_meta properly updated on media translated with Polylang.
+ *
+ */
+
 namespace WPSL\PolylangPro;
 
 use wpCloud\StatelessMedia\Compatibility;
