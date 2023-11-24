@@ -1,7 +1,7 @@
 === WP-Stateless - Polylang Pro Addon ===
 Contributors: usability_dynamics, andypotanin, ideric, maxim.peshkov, planvova, obolgun
 Donate link: https://udx.io
-Tags: polylang, multilingual, translate, localization, google, google cloud, google cloud storage, cdn, uploads, media, stateless, backup, polylang, language, translate, translation
+Tags: polylang, multilingual, translate, localization, google, google cloud, google cloud storage, cdn, uploads, media, stateless, backup
 License: GPLv2 or later
 Requires PHP: 8.0
 Requires at least: 5.0
