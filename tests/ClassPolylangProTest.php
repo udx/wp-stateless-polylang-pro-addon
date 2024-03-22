@@ -1,6 +1,6 @@
 <?php
 
-namespace WPSL\PolylangPro;
+namespace SLCA\PolylangPro;
 
 use PHPUnit\Framework\TestCase;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
