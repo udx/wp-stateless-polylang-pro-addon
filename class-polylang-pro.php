@@ -1,17 +1,12 @@
 <?php
 
-/**
- * Compatibility Plugin Name: Polylang Pro
- * Compatibility Plugin URI: https://polylang.pro/
- *
- * Compatibility Description: Ensures post_meta properly updated on media translated with Polylang.
- *
- */
-
-namespace WPSL\PolylangPro;
+namespace SLCA\PolylangPro;
 
 use wpCloud\StatelessMedia\Compatibility;
 
+/**
+ * Class PolylangPro
+ */
 class PolylangPro extends Compatibility {
   protected $id = 'polylang-pro';
   protected $title = 'Polylang Pro';
@@ -29,6 +24,12 @@ class PolylangPro extends Compatibility {
     add_action('pll_translate_media', array($this, 'pll_translate_media'), 10, 3);
   }
 
+  /**
+   * Prepare metadata for copying between translated attachments
+   * 
+   * @param $post_id
+   * @return mixed|null
+   */
   private function get_stateless_meta($post_id) {
     // In case Polylang is not active of codebase not compatible anymore
     if (!function_exists('pll_get_post_translations')) {
@@ -50,6 +51,60 @@ class PolylangPro extends Compatibility {
     }
 
     return $metadata;
+  }
+
+  /**
+   * Prepare GCS data for copying between translated attachments
+   * 
+   * @param $post_id
+   * @return mixed|null
+   */
+  private function get_stateless_data($post_id) {
+    // In case Polylang is not active of codebase not compatible anymore
+    if (!function_exists('pll_get_post_translations')) {
+      return null;
+    }
+
+    // For the compatibility with the older versions of WP Stateless
+    if ( !function_exists('ud_stateless_db') ) {
+      return null;
+    }
+
+    $ids = pll_get_post_translations($post_id);
+
+    $data = [];
+
+    foreach ($ids as $id) {
+      $file =  apply_filters( 'wp_stateless_get_file', [], $id );
+
+      if ( !empty($file) && !empty($file['name']) ) {
+        $data['file'] = $file;
+        
+        break;
+      }
+    }
+
+    foreach ($ids as $id) {
+      $sizes = apply_filters( 'wp_stateless_get_file_sizes', [], $id );
+
+      if ( !empty($sizes) ) {
+        $data['sizes'] = $sizes;
+        
+        break;
+      }
+    }
+
+    foreach ($ids as $id) {
+      $meta = apply_filters( 'wp_stateless_get_file_meta', [], $id );
+
+      if ( !empty($meta) ) {
+        $data['meta'] = $meta;
+        
+        break;
+      }
+    }
+
+    return $data;
   }
 
   /**
@@ -83,6 +138,31 @@ class PolylangPro extends Compatibility {
         update_post_meta($tr_id, 'sm_cloud', wp_slash($cloud_meta)); 
       }
   
+      // Duplicate WP Stateless data for the new attachment and sizes
+      $data = $this->get_stateless_data($attachment_id);
+
+      if ( !empty($data) ) {
+        try {
+          foreach ( [$attachment_id, $tr_id] as $id ) {
+            do_action('wp_stateless_set_file', $id, $data['file']);
+
+            $sizes = $data['sizes'] ?? [];
+
+            foreach ($sizes as $name => $size) {
+              do_action('wp_stateless_set_file_size', $id, $name, $size);
+            }
+
+            $meta = $data['meta'] ?? [];
+
+            foreach ($meta as $key => $value) {
+              do_action('wp_stateless_set_file_meta', $id, $key, $value);
+            }
+          }
+        } catch (\Throwable $e) {
+          error_log( $e->getMessage() );
+        }
+      }
+
       return $metadata;
     }, 10, 4);
   }

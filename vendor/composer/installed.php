@@ -3,7 +3,7 @@
         'name' => 'udx/wp-stateless-polylang-pro-addon',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '28a9c23a310fd699b1075f9a6ca396d948715e93',
+        'reference' => '3797ee5f24f994f8c5f8703fdf3060523d703aa9',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'udx/wp-stateless-polylang-pro-addon' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '28a9c23a310fd699b1075f9a6ca396d948715e93',
+            'reference' => '3797ee5f24f994f8c5f8703fdf3060523d703aa9',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
