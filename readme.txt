@@ -5,7 +5,7 @@ Tags: polylang, multilingual, translate, localization, google, google cloud, goo
 License: GPLv2 or later
 Requires PHP: 8.0
 Requires at least: 5.0
-Tested up to: 6.4.1
+Tested up to: 6.4.3
 Stable tag: 0.0.1
 
 Provides compatibility between the Polylang Pro and the WP-Stateless plugins.
