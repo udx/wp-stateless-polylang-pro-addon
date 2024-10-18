@@ -3,6 +3,7 @@
 namespace SLCA\PolylangPro;
 
 use wpCloud\StatelessMedia\Compatibility;
+use wpCloud\StatelessMedia\Helper;
 
 /**
  * Class PolylangPro
@@ -159,7 +160,7 @@ class PolylangPro extends Compatibility {
             }
           }
         } catch (\Throwable $e) {
-          error_log( $e->getMessage() );
+          Helper::debug( $e->getMessage() );
         }
       }
 

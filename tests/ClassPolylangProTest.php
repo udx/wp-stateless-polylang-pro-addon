@@ -5,6 +5,9 @@ namespace SLCA\PolylangPro;
 use PHPUnit\Framework\TestCase;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Brain\Monkey;
+use Brain\Monkey\Actions;
+use Brain\Monkey\Filters;
+use Brain\Monkey\Functions;
 use wpCloud\StatelessMedia\WPStatelessStub;
 
 /**
@@ -31,6 +34,15 @@ class ClassPolylangProTest extends TestCase {
     $polylangPro->module_init([]);
 
     self::assertNotFalse( has_action('pll_translate_media', [ $polylangPro, 'pll_translate_media' ]) );
+  }
+
+  public function testShouldCountHooks() {
+    $polylangPro = new PolylangPro();
+
+    Functions\expect('add_action')->times(1);
+    Functions\expect('add_filter')->times(0);
+
+    $polylangPro->module_init([]);
   }
 
   public function testShouldHookToTranslatedMedia() {
