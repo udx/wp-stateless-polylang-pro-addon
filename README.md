@@ -8,7 +8,7 @@ Provides compatibility between the [Polylang Pro](https://polylang.pro/) and the
 
 ### Notes
 
-* Tested with Polylang Pro plugin version 3.5.2
+* Tested with Polylang Pro plugin version 3.6.4
 
 ### Support, Feedback, & Contribute
 
